@@ -1,0 +1,224 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>maven</groupId>
+  <artifactId>mavendemo</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>mavendemo</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-core</artifactId>
+    <version>5.3.13</version>
+</dependency>
+
+
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.3.13</version>
+</dependency>
+
+  
+    
+    
+    <dependency>
+    
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
+
+
+
+package maven.mavendemo;
+import org.springframework.beans.factory.annotation.Autowired;
+public class MessagePass {
+	@Autowired
+	MyMessage msg;
+
+	public MyMessage getMsg() {
+		return msg;
+	}
+
+	public void setMsg(MyMessage msg) {
+		this.msg = msg;
+	}
+	void displaymsg() {
+		msg.display();
+	}
+
+}
+
+
+
+package maven.mavendemo;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyMessage {
+	public MyMessage() {
+		System.out.print("inside constructor......");
+	}
+	void display() {
+		System.out.print("inside method...");
+	}
+
+}
+
+
+
+package maven.mavendemo;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class Student1 {
+	@Autowired
+	Address add;
+
+	public Address getAdd() {
+		return add;
+	}
+
+	public void setAdd(Address add) {
+		this.add = add;
+	}
+	void displayadd() {
+		add.display();
+	}
+
+}
+
+
+package maven.mavendemo;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class Address {
+
+	public Address() {
+		System.out.println("Mysore");
+		// TODO Auto-generated constructor stub
+	}
+	void display() {
+		System.out.println("welcome");
+	
+	}
+	
+
+}
+
+
+
+package maven.mavendemo;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class Employee1 {
+	@Autowired
+	Salary sal;
+
+	public Salary getSal() {
+		return sal;
+	}
+
+	public void setSal(Salary sal) {
+		this.sal = sal;
+	}
+	void displaysal() {
+		sal.display();
+	}
+
+
+}
+
+
+package maven.mavendemo;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class Salary {
+
+	public Salary() {
+		System.out.println("caluculate salary");
+		// TODO Auto-generated constructor stub
+	}
+	void display(){
+		System.out.println("100000");
+		
+	}
+	
+
+}
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+     <context:annotation-config/>
+ 
+
+    <bean id="msg" class="maven.mavendemo.MyMessage">
+</bean>
+ 
+
+    <bean id="msgpass" class="maven.mavendemo.MessagePass">
+</bean>
+
+<bean id="add" class="maven.mavendemo.Address">
+</bean>
+
+
+
+<bean id="stdadd" class="maven.mavendemo.Student1">
+</bean>
+
+<bean id="sal" class="maven.mavendemo.Salary">
+</bean>
+
+
+
+<bean id="salcal" class="maven.mavendemo.Employee1">
+</bean>
+ 
+ 
+
+</beans>
+
+
+
+package maven.mavendemo;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("NewFile.xml");
+        MessagePass pass=(MessagePass)context.getBean("msgpass");
+        pass.displaymsg();
+        
+        Employee1 emp=(Employee1)context.getBean("salcal");
+        emp.displaysal();
+        }
+    
+}
+
+
