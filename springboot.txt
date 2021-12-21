@@ -1,0 +1,172 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.Student;
+import com.example.demo.service.StudentService;
+
+
+@RestController
+@RequestMapping("/api")
+
+
+public class StudentController {
+	@Autowired
+	
+	StudentService service;
+	@GetMapping("/getstudents")
+	public List<Student> getAllStudents()
+	{
+		return service.getAllStudents();
+	}
+	@PostMapping("/student")
+	public void saveStudent(@RequestBody Student s)
+	{
+		service.saveStudent(s);
+	}
+	@PostMapping("/deletestudent/{id}")
+	public void deleteStudent(@PathVariable String id) {
+		service.deleteStudent(id);
+	}
+
+}
+
+
+
+
+
+package com.example.demo.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.example.demo.model.Student;
+
+
+
+@Repository
+public interface StudentRepository extends JpaRepository<Student,String> {
+
+}
+
+
+package com.example.demo.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="student")
+
+public class Student {
+	
+	
+	String name;
+	@Id
+	String rollno;
+	String email;
+	String phone;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getRollno() {
+		return rollno;
+	}
+	public void setRollno(String rollno) {
+		this.rollno = rollno;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	
+
+}
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.model.Student;
+import com.example.demo.repository.*;
+
+@Service
+
+public class StudentService {
+	 @Autowired
+		StudentRepository repository;
+		
+		public List<Student> getAllStudents()
+		{
+			return repository.findAll();
+		}
+	
+		public void saveStudent(Student s) {
+			repository.save(s);
+			
+		}
+		public void deleteStudent(String e) {
+			repository.deleteById(e);
+		}
+}
+			
+		
+
+
+
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.model.Student;
+import com.example.demo.repository.*;
+
+@Service
+
+public class StudentService {
+	 @Autowired
+		StudentRepository repository;
+		
+		public List<Student> getAllStudents()
+		{
+			return repository.findAll();
+		}
+	
+		public void saveStudent(Student s) {
+			repository.save(s);
+			
+		}
+		public void deleteStudent(String e) {
+			repository.deleteById(e);
+		}
+}
+			
+		
+
